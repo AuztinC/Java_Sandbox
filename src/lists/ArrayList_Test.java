@@ -4,8 +4,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.*;
 
 public class ArrayList_Test {
 
@@ -204,6 +203,75 @@ public class ArrayList_Test {
             list.add(i, list.size()/2);
         }
         assertEquals(1000, list.size());
+    }
+
+    @Test
+    public void bubbleSortTwoElements() throws Exception {
+        list.add(2);
+        list.add(1);
+        list.BubbleSort(list);
+        assertEquals(1, list.get(0));
+        assertEquals(2, list.get(1));
+    }
+
+    @Test
+    public void bubbleSortThreeElementsReversed() {
+        list.add(3);
+        list.add(2);
+        list.add(1);
+        list.BubbleSort(list);
+        assertEquals(1, list.get(0));
+        assertEquals(2, list.get(1));
+        assertEquals(3, list.get(2));
+    }
+
+    @Test
+    public void bubbleSortPreservesSortedOrder() {
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.BubbleSort(list);
+        assertEquals(1, list.get(0));
+        assertEquals(2, list.get(1));
+        assertEquals(3, list.get(2));
+    }
+
+    @Test
+    public void bubbleSortHandlesDuplicates() {
+        list.add(2);
+        list.add(1);
+        list.add(2);
+        list.BubbleSort(list);
+        assertEquals(1, list.get(0));
+        assertEquals(2, list.get(1));
+        assertEquals(2, list.get(2));
+    }
+
+    @Test
+    public void bubbleSort100RandomElements() throws Exception {
+        for (int i = 0; i < 100; i++) {
+            int randomInt = (int) (Math.random() * 100);
+            list.add(randomInt, 0);
+        }
+        list.BubbleSort(list);
+
+        for (int i = 0; i < list.size() - 1; i++) {
+            assertTrue(list.get(i) <= list.get(i + 1));
+        }
+    }
+
+    @Ignore
+    @Test
+    public void bubbleSort10000RandomElements() throws Exception {
+        for (int i = 0; i < 10000; i++) {
+            int randomInt = (int) (Math.random() * 10000);
+            list.add(randomInt, 0);
+        }
+        list.BubbleSort(list);
+
+        for (int i = 0; i < list.size() - 1; i++) {
+            assertTrue(list.get(i) <= list.get(i + 1));
+        }
     }
 
 

@@ -58,4 +58,26 @@ public class ArrayList implements List {
             throw new IndexOutOfBoundsException();
         return elements[index];
     }
+
+    public void BubbleSort(ArrayList list){
+        for (int i = 0; i < list.size()-1; i++) {
+            for (int j = 0; j < list.size()-1; j++) {
+                if(list.get(j) > list.get(j+1)){
+                    int larger = list.get(j);
+                    int smaller = list.get(j+1);
+                    list.remove(j+1);
+                    list.remove(j);
+                    list.add(smaller, j);
+                    list.add(larger, j+1);
+                }
+            }
+        }
+    }
+
+    public void Merge(ArrayList leftList, ArrayList rightList, ArrayList list) {
+
+    }
+
+    public void MergeSort(ArrayList list) {
+    }
 }
