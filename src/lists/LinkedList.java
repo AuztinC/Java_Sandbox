@@ -14,6 +14,11 @@ public class LinkedList implements List {
     }
 
     @Override
+    public List createList() {
+        return new LinkedList();
+    }
+
+    @Override
     public void add(int value) {
         Node newNode = new Node(value);
         Node current = head;
@@ -80,6 +85,8 @@ public class LinkedList implements List {
         }
         return current.value;
     }
+
+
 
     public void BubbleSort(ArrayList list){
         for (int i = 0; i < list.size()-1; i++) {

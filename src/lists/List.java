@@ -6,4 +6,6 @@ public interface List {
     int size();
     void remove(int index);
     int get(int index);
+
+    List createList();
 }

@@ -6,18 +6,11 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-public class LinkedListTest {
+public class LinkedListTest extends ListTest {
 
-    private LinkedList list;
-
-    @Before
-    public void setup() {
-        list = new LinkedList();
-    }
-
-    @Test
-    public void emptyListNoElements() {
-        assertEquals(0, list.size());
+    @Override
+    protected List createList() {
+        return new LinkedList();
     }
 
     @Test
