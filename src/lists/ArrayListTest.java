@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class ArrayList_Test {
+public class ArrayListTest {
 
     private ArrayList list;
 
