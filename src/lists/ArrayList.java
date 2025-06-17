@@ -22,6 +22,13 @@ public class ArrayList implements List {
             elements = Arrays.copyOf(elements, elements.length * 2);
     }
 
+    public void set(int index, int value) {
+        if (index >= size || index < 0)
+            throw new IndexOutOfBoundsException();
+        elements[index] = value;
+    }
+
+
     @Override
     public List createList() {
         return new ArrayList();

@@ -8,4 +8,6 @@ public interface List {
     int get(int index);
 
     List createList();
+
+    void set(int j, int temp);
 }

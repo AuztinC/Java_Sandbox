@@ -19,6 +19,17 @@ public class LinkedList implements List {
     }
 
     @Override
+    public void set(int index, int value) {
+        if (index >= size || index < 0)
+            throw new IndexOutOfBoundsException();
+        Node current = head;
+        for (int i = 0; i < index; i++) {
+            current = current.next;
+        }
+        current.value = value;
+    }
+
+    @Override
     public void add(int value) {
         Node newNode = new Node(value);
         Node current = head;
@@ -84,23 +95,6 @@ public class LinkedList implements List {
             }
         }
         return current.value;
-    }
-
-
-
-    public void BubbleSort(ArrayList list){
-        for (int i = 0; i < list.size()-1; i++) {
-            for (int j = 0; j < list.size()-1; j++) {
-                if(list.get(j) > list.get(j+1)){
-                    int larger = list.get(j);
-                    int smaller = list.get(j+1);
-                    list.remove(j+1);
-                    list.remove(j);
-                    list.add(smaller, j);
-                    list.add(larger, j+1);
-                }
-            }
-        }
     }
 
 }

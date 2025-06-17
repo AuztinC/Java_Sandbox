@@ -17,28 +17,36 @@ public class Sort {
         }
     }
 
-    public static void Merge(List leftList, List rightList, List list) {
+    public static void merge(List leftList, List rightList, List list) {
 //        look at same index of each sub array, compare
 //        at next list index, insert smaller value followed by larger.
-        int listIdx = 0;
-        for (int i = 0; i < Math.max(leftList.size(), rightList.size()); i++) {
-            if(leftList.get(i) < rightList.get(i)) {
-                list.remove(listIdx);
-                list.remove(listIdx+1);
-                list.add(leftList.get(i), listIdx);
-                list.add(rightList.get(i), listIdx+1);
+        int leftIdx = 0;
+        int rightIdx = 0;
+        int mergedIdx = 0;
+        while (leftIdx < leftList.size() || rightIdx < rightList.size()) {
+            if (leftIdx >= leftList.size()) {
+                list.remove(mergedIdx);
+                list.add(rightList.get(rightIdx), mergedIdx);
+                rightIdx++;
+            } else if (rightIdx >= rightList.size()) {
+                list.remove(mergedIdx);
+                list.add(leftList.get(leftIdx), mergedIdx);
+                leftIdx++;
+            } else if (leftList.get(leftIdx) < rightList.get(rightIdx)) {
+                list.remove(mergedIdx);
+                list.add(leftList.get(leftIdx), mergedIdx);
+                leftIdx++;
             } else {
-                list.remove(listIdx);
-                list.remove(listIdx+1);
-                list.add(rightList.get(i), listIdx);
-                list.add(leftList.get(i), listIdx+1);
+                list.remove(mergedIdx);
+                list.add(rightList.get(rightIdx), mergedIdx);
+                rightIdx++;
             }
-            listIdx+=2;
+            mergedIdx++;
         }
     }
 
-    public static void MergeSort(List list) {
-        if (list.size() >= 1) return;
+    public static void mergeSort(List list) {
+        if (list.size() <= 1) return;
 
         int middle = list.size() / 2;
         List left = list.createList();
@@ -46,10 +54,51 @@ public class Sort {
         for (int i = 0; i < list.size(); i++) {
             if (i < middle)
                 left.add(list.get(i));
-            right.add(list.get(i));
+            else
+                right.add(list.get(i));
         }
-        MergeSort(left);
-        MergeSort(right);
-        Merge(left, right, list);
+        mergeSort(left);
+        mergeSort(right);
+        merge(left, right, list);
+    }
+
+    public static void quickSort(List list, int start, int end) {
+
+        if (end <= start) return;
+        int pivot = partition(list, start, end);
+        quickSort(list, start, pivot - 1);
+        quickSort(list, pivot + 1, end);
+    }
+
+    public static int partition(List list, int start, int end) {
+        int pivot = list.get(end);
+        int i = start - 1;
+        for (int j = start; j < end; j++) {
+            if (list.get(j) <= pivot) {
+                i++;
+                int temp = list.get(i);
+                list.set(i, list.get(j));
+                list.set(j, temp);
+
+//                int tempi = list.get(i);
+//                int tempj = list.get(j);
+//                list.remove(i);
+//                list.add(tempj, i);
+//                list.remove(j);
+//                list.add(tempi, j);
+            }
+        }
+        i++;
+        int temp = list.get(i);
+        list.set(i, list.get(end));
+        list.set(end, temp);
+
+//        int tempi = list.get(i);
+//        int tempj = list.get(end);
+//        list.remove(i);
+//        list.add(tempj, i);
+//        list.remove(end);
+//        list.add(tempi, end);
+        return i;
     }
 }
