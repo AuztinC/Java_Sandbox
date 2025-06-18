@@ -170,25 +170,34 @@ public abstract class ListTest {
 
     @Test
     public void add1000IntegersToEnd() throws Exception {
+        double start = System.nanoTime();
         for (int i = 0; i < 1000; i++) {
             list.add(i);
         }
+        double end = System.nanoTime();
+        System.out.println("end: " + (end - start));
         assertEquals(1000, list.size());
     }
 
     @Test
     public void add1000IntegersToFront() throws Exception {
+        double start = System.nanoTime();
         for (int i = 0; i < 1000; i++) {
             list.add(i, 0);
         }
+        double end = System.nanoTime();
+        System.out.println("front: " + (end - start));
         assertEquals(1000, list.size());
     }
 
     @Test
     public void add1000IntegersToMiddle() throws Exception {
+        double start = System.nanoTime();
         for (int i = 0; i < 1000; i++) {
             list.add(i, list.size()/2);
         }
+        double end = System.nanoTime();
+        System.out.println("middle: " + (end - start));
         assertEquals(1000, list.size());
     }
 }

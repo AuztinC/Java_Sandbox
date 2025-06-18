@@ -28,7 +28,6 @@ public class ArrayList implements List {
         elements[index] = value;
     }
 
-
     @Override
     public List createList() {
         return new ArrayList();

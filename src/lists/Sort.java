@@ -73,32 +73,18 @@ public class Sort {
     public static int partition(List list, int start, int end) {
         int pivot = list.get(end);
         int i = start - 1;
-        for (int j = start; j < end; j++) {
+        for (int j = start; j <= end-1; j++) {
             if (list.get(j) <= pivot) {
                 i++;
                 int temp = list.get(i);
                 list.set(i, list.get(j));
                 list.set(j, temp);
-
-//                int tempi = list.get(i);
-//                int tempj = list.get(j);
-//                list.remove(i);
-//                list.add(tempj, i);
-//                list.remove(j);
-//                list.add(tempi, j);
             }
         }
         i++;
         int temp = list.get(i);
         list.set(i, list.get(end));
         list.set(end, temp);
-
-//        int tempi = list.get(i);
-//        int tempj = list.get(end);
-//        list.remove(i);
-//        list.add(tempj, i);
-//        list.remove(end);
-//        list.add(tempi, end);
         return i;
     }
 }
