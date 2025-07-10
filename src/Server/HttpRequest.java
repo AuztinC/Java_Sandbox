@@ -8,10 +8,12 @@ import java.io.InputStreamReader;
 public class HttpRequest {
     private final Methods method;
     private final String path;
+    private final String version;
 
-    public HttpRequest(Methods method, String path) {
+    public HttpRequest(Methods method, String path, String version) {
         this.method = method;
         this.path = path;
+        this.version = version;
     }
 
     public Methods getMethod() {
@@ -20,6 +22,10 @@ public class HttpRequest {
 
     public String getPath() {
         return path;
+    }
+
+    public String getVersion() {
+        return version;
     }
 
     public static HttpRequest parse(InputStream is) throws IOException {
@@ -41,9 +47,10 @@ public class HttpRequest {
 
         String methodString = parts[0];
         String pathString = parts[1];
+        String versionString = parts[2];
         Methods method = Methods.confirmMethod(methodString);
 
-        return new HttpRequest(method, pathString);
+        return new HttpRequest(method, pathString, versionString);
     }
 
 

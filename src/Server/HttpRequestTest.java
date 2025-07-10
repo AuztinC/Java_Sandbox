@@ -65,6 +65,13 @@ public class HttpRequestTest {
     }
 
     @Test
+    public void extractsVersion() throws IOException {
+        InputStream is = new ByteArrayInputStream("GET /ping HTTP/1.1\r\n\r\n".getBytes());
+        HttpRequest req = HttpRequest.parse(is);
+        assertEquals("HTTP/1.1", req.getVersion());
+    }
+
+    @Test
     public void throwsForBadHTTPVersion() {
         InputStream is = new ByteArrayInputStream("GET / HTTP/1.0\r\n\r\n".getBytes());
         assertThrows(IllegalArgumentException.class, () -> {
@@ -78,5 +85,14 @@ public class HttpRequestTest {
         HttpRequest req = HttpRequest.parse(is);
         assertEquals("/ping", req.getPath());
     }
+
+//    @Test
+//    public void throwsIfRequestLineNotTerminatedWithCRLF() {
+//        InputStream is = new ByteArrayInputStream("GET / HTTP/1.1\nHost: localhost\r\n\r\n".getBytes());
+//
+//        assertThrows(IllegalArgumentException.class, () -> {
+//            HttpRequest.parse(is);
+//        });
+//    }
 
 }
