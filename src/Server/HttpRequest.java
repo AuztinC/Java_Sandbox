@@ -7,13 +7,19 @@ import java.io.InputStreamReader;
 
 public class HttpRequest {
     private final Methods method;
+    private final String path;
 
-    public HttpRequest(Methods method) {
+    public HttpRequest(Methods method, String path) {
         this.method = method;
+        this.path = path;
     }
 
     public Methods getMethod() {
         return method;
+    }
+
+    public String getPath() {
+        return path;
     }
 
     public static HttpRequest parse(InputStream is) throws IOException {
@@ -23,9 +29,22 @@ public class HttpRequest {
         if (requestLine == null || requestLine.isEmpty())
             throw new IllegalArgumentException("Empty request line");
 
-        Methods method = Methods.fromString(requestLine);
+        String[] parts = requestLine.split(" ");
+        if (parts.length != 3)
+            throw new IllegalArgumentException("Invalid request line " + requestLine);
 
-        return new HttpRequest(method);
+        if (parts[1].isEmpty() || !parts[1].contains("/"))
+            throw new IllegalArgumentException("Invalid Directory Path " + requestLine);
+
+        if (parts[2].isEmpty() || !parts[2].equals("HTTP/1.1"))
+            throw new IllegalArgumentException("Invalid HTTP version " + requestLine);
+
+        String methodString = parts[0];
+        String pathString = parts[1];
+        Methods method = Methods.confirmMethod(methodString);
+
+        return new HttpRequest(method, pathString);
     }
+
 
 }

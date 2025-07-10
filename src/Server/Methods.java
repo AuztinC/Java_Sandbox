@@ -1,10 +1,11 @@
 package Server;
 
 public enum Methods {
-    GET;
+    GET,
+    PUT;
 
 
-    public static Methods fromString(String input) {
+    public static Methods confirmMethod(String input) {
         try {
             return Methods.valueOf(input);
         } catch (IllegalArgumentException e) {

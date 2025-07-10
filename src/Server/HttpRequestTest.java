@@ -28,8 +28,8 @@ public class HttpRequestTest {
     }
 
     @Test
-    public void acceptsCorrectMethodInput() throws IOException {
-        InputStream is = new ByteArrayInputStream("GET".getBytes());
+    public void acceptsPathWithSubdirectories() throws IOException {
+        InputStream is = new ByteArrayInputStream("GET /guess/game HTTP/1.1\r\n\r\n".getBytes());
         HttpRequest req = HttpRequest.parse(is);
         assertEquals(Methods.GET, req.getMethod());
     }
@@ -42,11 +42,41 @@ public class HttpRequestTest {
         });
     }
 
-//    @Test
-//    public void checksForGetMethod() {
-//        InputStream is = new ByteArrayInputStream("GET / HTTP/1.1\r\n\r\n".getBytes());
-//        HttpRequest req = HttpRequest.parse(is);
-//        assertEquals(Methods.GET, req.getMethod());
-//    }
+    @Test
+    public void checksForGetMethod() throws IOException {
+        InputStream is = new ByteArrayInputStream("GET / HTTP/1.1\r\n\r\n".getBytes());
+        HttpRequest req = HttpRequest.parse(is);
+        assertEquals(Methods.GET, req.getMethod());
+    }
+
+    @Test
+    public void checksForPutMethod() throws IOException {
+        InputStream is = new ByteArrayInputStream("PUT / HTTP/1.1\r\n\r\n".getBytes());
+        HttpRequest req = HttpRequest.parse(is);
+        assertEquals(Methods.PUT, req.getMethod());
+    }
+
+    @Test
+    public void throwsForDirectoryWithoutSlash() {
+        InputStream is = new ByteArrayInputStream("GET word HTTP/1.1\r\n\r\n".getBytes());
+        assertThrows(IllegalArgumentException.class, () -> {
+            HttpRequest.parse(is);
+        });
+    }
+
+    @Test
+    public void throwsForBadHTTPVersion() {
+        InputStream is = new ByteArrayInputStream("GET / HTTP/1.0\r\n\r\n".getBytes());
+        assertThrows(IllegalArgumentException.class, () -> {
+            HttpRequest.parse(is);
+        });
+    }
+
+    @Test
+    public void extractsRequestPath() throws IOException {
+        InputStream is = new ByteArrayInputStream("GET /ping HTTP/1.1\r\n\r\n".getBytes());
+        HttpRequest req = HttpRequest.parse(is);
+        assertEquals("/ping", req.getPath());
+    }
 
 }
